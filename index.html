@@ -376,7 +376,7 @@ function surveyView() {
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:5px">${l}</label>
           <input type="${t}" value="${esc(f[k])}" placeholder="${ph}"
-            oninput="STATE.form['${k}']=this.value">
+            oninput="STATE.form['${k}']=this.value;render()">
         </div>`).join('')}
     </div>`;
   }
