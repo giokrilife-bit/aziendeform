@@ -4,784 +4,759 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Welfare Aziendale – Survey Platform</title>
-<meta name="description" content="Questionario di rilevazione interesse welfare per PMI"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f5f7;color:#1a1a1a;min-height:100vh;font-size:14px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f5f7;color:#1a1a1a;font-size:14px;min-height:100vh}
 :root{
-  --bg:#ffffff;--bg2:#f4f5f7;--bg3:#eef0f3;
-  --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.2);
+  --bg:#fff;--bg2:#f4f5f7;--bg3:#e8eaed;
+  --border:rgba(0,0,0,0.1);--b2:rgba(0,0,0,0.2);
   --text:#1a1a1a;--muted:#6b7280;
   --blue:#1D4ED8;--blueL:#DBEAFE;
   --green:#15803D;--greenL:#DCFCE7;
   --amber:#B45309;--amberL:#FEF3C7;
   --teal:#0F766E;--tealL:#CCFBF1;
   --red:#DC2626;--redL:#FEE2E2;
-  --radius:8px;--radius-lg:12px;
 }
 @media(prefers-color-scheme:dark){
   body{background:#111}
-  :root{
-    --bg:#1e1e1e;--bg2:#2a2a2a;--bg3:#333;
-    --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);
-    --text:#f0f0f0;--muted:#9ca3af;
-    --blueL:#1e3a8a;--greenL:#14532d;--amberL:#78350f;--tealL:#134e4a;--redL:#7f1d1d;
-  }
+  :root{--bg:#1e1e1e;--bg2:#252525;--bg3:#333;--border:rgba(255,255,255,0.1);--b2:rgba(255,255,255,0.2);--text:#f0f0f0;--muted:#9ca3af;--blueL:#1e3a8a;--greenL:#14532d;--amberL:#78350f;--tealL:#134e4a;--redL:#7f1d1d}
 }
-button{
-  border:0.5px solid var(--border2);background:transparent;color:var(--text);
-  padding:7px 16px;border-radius:var(--radius);cursor:pointer;
-  font-size:13px;font-family:inherit;transition:background 0.15s,color 0.15s,border-color 0.15s;
-}
+
+/* BASE */
+button{border:.5px solid var(--b2);background:transparent;color:var(--text);padding:7px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit;transition:all .15s}
 button:hover:not(:disabled){background:var(--bg2)}
-button:disabled{opacity:0.4;cursor:not-allowed}
-input,select,textarea{
-  border:0.5px solid var(--border2);background:var(--bg);color:var(--text);
-  padding:8px 12px;border-radius:var(--radius);font-size:13px;
-  font-family:inherit;outline:none;width:100%;
-}
-input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,78,216,0.1)}
-.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem}
-.pbar{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden}
-.pbar-fill{height:100%;border-radius:4px;transition:width 0.6s ease}
+button:disabled{opacity:.4;cursor:not-allowed}
+input,select{border:.5px solid var(--b2);background:var(--bg);color:var(--text);padding:9px 12px;border-radius:8px;font-size:14px;font-family:inherit;outline:none;width:100%}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,78,216,.12)}
+label{display:block}
+.card{background:var(--bg);border:.5px solid var(--border);border-radius:12px;padding:1.25rem}
+.pbar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.pbar-f{height:100%;border-radius:4px;transition:width .6s ease}
 .badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;display:inline-block}
-.metric{background:var(--bg2);border-radius:var(--radius);padding:0.75rem 1rem}
-.metric .m-label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
-.metric .m-val{font-size:20px;font-weight:500}
-.metric .m-unit{font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:11px;border-bottom:1px solid var(--border)}
-td{padding:8px;border-bottom:0.5px solid var(--border)}
+td{padding:8px;border-bottom:.5px solid var(--border)}
+
+/* NAV */
+#nav{padding:.75rem 1.5rem;border-bottom:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.nav-btn{font-size:13px;padding:5px 12px}
+.nav-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* VIEWS */
+.view{display:none;padding:1.25rem;max-width:760px;margin:0 auto;padding-bottom:3rem}
+.view.active{display:block}
+
+/* SURVEY */
+#survey-form{max-width:580px;margin:0 auto}
+.step{display:none}
+.step.active{display:block}
+
+/* RADIO / CHECK OPTIONS */
+.opt{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);background:transparent;transition:all .15s;margin-bottom:7px;user-select:none}
+.opt:hover{border-color:var(--blue)}
+.opt.selected{border-color:var(--blue);background:var(--blueL)}
+.opt.selected-teal{border-color:var(--teal);background:var(--tealL)}
+.opt-dot{width:15px;height:15px;border-radius:50%;border:2px solid #aaa;background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.opt.selected .opt-dot{border-color:var(--blue);background:var(--blue)}
+.opt-dot-inner{width:5px;height:5px;border-radius:50%;background:#fff;display:none}
+.opt.selected .opt-dot-inner{display:block}
+.opt-box{width:15px;height:15px;border-radius:4px;border:2px solid #aaa;background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.opt.selected-teal .opt-box{border-color:var(--teal);background:var(--teal)}
+.opt-check{display:none;color:#fff;font-size:10px;font-weight:700}
+.opt.selected-teal .opt-check{display:block}
+
+/* SCALE */
+.scale-wrap{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.scale-btn{width:42px;height:42px;border-radius:8px;padding:0;font-weight:500;font-size:15px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.scale-btn.on{border-color:var(--blue);background:var(--blue);color:#fff}
+
+/* METRIC */
+.metric{background:var(--bg2);border-radius:8px;padding:.75rem 1rem}
+.metric .ml{font-size:11px;color:var(--muted);margin-bottom:4px}
+.metric .mv{font-size:20px;font-weight:500}
+.metric .mu{font-size:12px}
 </style>
 </head>
 <body>
 
-<div id="app"></div>
+<!-- NAV -->
+<div id="nav">
+  <div><strong style="font-size:15px">Welfare Aziendale</strong><span style="font-size:11px;color:var(--muted);margin-left:8px">Survey Platform</span></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="nav-btn active" data-view="home">Home</button>
+    <button class="nav-btn" data-view="survey">Questionario</button>
+    <button class="nav-btn" data-view="dashboard">Dashboard</button>
+    <button class="nav-btn" data-view="report">Report</button>
+  </div>
+</div>
 
-<script>
-// ═══════════════════════════════════════════════════════════════
-//  CONFIGURAZIONE QUESTIONARIO
-//  Modifica qui sezioni, domande e opzioni
-// ═══════════════════════════════════════════════════════════════
-
-const SECTIONS = [
-  {
-    id: 'welcome',
-    title: 'Benvenuto',
-    desc: 'Compila il questionario per valutare l\'interesse della tua azienda verso il welfare aziendale. Richiede circa 3 minuti.',
-  },
-  {
-    id: 'A',
-    title: 'Sezione A – Profilo azienda',
-    fields: [
-      { key:'settore', label:'1. Settore di attività', type:'radio',
-        opts:['Produzione','Servizi','Commercio','Artigianato','Altro'] },
-      { key:'dipendenti', label:'2. Numero dipendenti', type:'radio',
-        opts:['1–5','6–20','21–50','50+'] },
-    ],
-  },
-  {
-    id: 'B',
-    title: 'Sezione B – Clima aziendale',
-    fields: [
-      { key:'soddisfazione', label:'3. Come valuti il livello di soddisfazione dei dipendenti? (1–5)', type:'scale' },
-      { key:'difficolta', label:'4. Hai difficoltà nel trattenere personale qualificato?', type:'radio',
-        opts:['Sì, spesso','A volte','No'] },
-      { key:'turnover', label:'5. Il turnover negli ultimi 2 anni è:', type:'radio',
-        opts:['Alto','Medio','Basso','Non rilevato'] },
-    ],
-  },
-  {
-    id: 'C',
-    title: 'Sezione C – Welfare attuale',
-    fields: [
-      { key:'welfareAttuale', label:'6. L\'azienda ha già forme di welfare attivo?', type:'radio',
-        opts:['No','Sì, minimo (bonus occasionali)','Sì, strutturato'] },
-      { key:'strumenti', label:'7. Quali strumenti sono presenti? (selezione multipla)', type:'multi',
-        opts:['Sanità integrativa','Buoni spesa','Previdenza complementare','Convenzioni','Nessuno'] },
-    ],
-  },
-  {
-    id: 'D',
-    title: 'Sezione D – Interesse e apertura',
-    fields: [
-      { key:'importanzaBenessere', label:'8. Quanto ritieni importante migliorare il benessere dei dipendenti? (1–5)', type:'scale' },
-      { key:'interesseSoluzioni', label:'9. Saresti interessato a soluzioni di welfare a costo contenuto o fiscalmente vantaggiose?', type:'radio',
-        opts:['Sì','Forse','No'] },
-      { key:'obiettivo', label:'10. Qual è il principale obiettivo aziendale oggi?', type:'radio',
-        opts:['Ridurre costi','Aumentare produttività','Fidelizzare dipendenti','Crescere organico','Altro'] },
-    ],
-  },
-  {
-    id: 'review',
-    title: 'Riepilogo',
-    desc: 'Controlla le risposte prima di inviare.',
-  },
-];
-
-// ═══════════════════════════════════════════════════════════════
-//  ALGORITMO SCORING (OUTPUT PREDITTIVO)
-//  Personalizza i pesi secondo le tue esigenze
-// ═══════════════════════════════════════════════════════════════
-
-function calcScore(r) {
-  let s = 0;
-  s += (r.soddisfazione || 0) * 6;                                           // max 30
-  if (r.difficolta === 'Sì, spesso') s += 15;
-  else if (r.difficolta === 'A volte') s += 8;                               // max 15
-  const wMap = { 'No': 5, 'Sì, minimo (bonus occasionali)': 12, 'Sì, strutturato': 4 };
-  s += wMap[r.welfareAttuale] || 0;                                          // max 12
-  s += (r.importanzaBenessere || 0) * 7;                                     // max 35
-  if (r.interesseSoluzioni === 'Sì') s += 15;
-  else if (r.interesseSoluzioni === 'Forse') s += 7;                         // max 15
-  const oMap = { 'Fidelizzare dipendenti':5,'Aumentare produttività':4,'Crescere organico':3,'Ridurre costi':2,'Altro':1 };
-  s += oMap[r.obiettivo] || 0;                                               // max 5
-  return Math.min(100, Math.round(s));
-}
-
-function calcPropensione(r) {
-  const base = { '50+':80, '21–50':65, '6–20':45, '1–5':30 }[r.dipendenti] || 40;
-  let v = base;
-  if (r.interesseSoluzioni === 'Sì') v += 15;
-  if (r.welfareAttuale === 'No') v -= 10;
-  if (r.turnover === 'Alto') v += 10;
-  return Math.min(100, Math.max(0, Math.round(v)));
-}
-
-function calcProb(score, prop) {
-  return Math.min(100, Math.round(score * 0.6 + prop * 0.4));
-}
-
-function enrich(r) {
-  const score = calcScore(r);
-  const prop  = calcPropensione(r);
-  return { ...r, score, propensione: prop, probabilita: calcProb(score, prop) };
-}
-
-function priority(score) {
-  return score >= 70 ? ['Alta', 'var(--green)', 'var(--greenL)']
-       : score >= 40 ? ['Media', 'var(--amber)', 'var(--amberL)']
-       :               ['Bassa', 'var(--red)',   'var(--redL)'];
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  DATABASE (localStorage)
-// ═══════════════════════════════════════════════════════════════
-
-const DB_KEY = 'welfare_survey_v1';
-
-function dbLoad() {
-  try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); }
-  catch { return []; }
-}
-function dbSave(arr) {
-  try { localStorage.setItem(DB_KEY, JSON.stringify(arr)); } catch {}
-}
-function dbExport(arr) {
-  const cols = ['ID','Data','Azienda','Referente','Email','Settore','Dipendenti',
-    'Soddisfazione','Difficoltà retention','Turnover','Welfare attuale','Strumenti',
-    'Importanza benessere','Interesse soluzioni','Obiettivo','Score','Propensione HR','Probabilità 6m'];
-  const rows = arr.map(r => {
-    const e = enrich(r);
-    return [
-      r.id, new Date(r.timestamp).toLocaleDateString('it-IT'),
-      r.azienda, r.referente, r.email,
-      r.settore, r.dipendenti, r.soddisfazione,
-      r.difficolta, r.turnover, r.welfareAttuale,
-      (r.strumenti||[]).join('|'),
-      r.importanzaBenessere, r.interesseSoluzioni, r.obiettivo,
-      e.score, e.propensione, e.probabilita,
-    ].join(';');
-  });
-  const csv = [cols.join(';'), ...rows].join('\n');
-  const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'})),
-    download: `welfare_export_${Date.now()}.csv`,
-  });
-  a.click();
-}
-function dbDelete(id) {
-  const updated = STATE.risposte.filter(r => r.id !== id);
-  STATE.risposte = updated;
-  dbSave(updated);
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════════════
-
-const EMPTY_FORM = {
-  azienda:'', referente:'', email:'',
-  settore:'', dipendenti:'',
-  soddisfazione:0, difficolta:'', turnover:'',
-  welfareAttuale:'', strumenti:[],
-  importanzaBenessere:0, interesseSoluzioni:'', obiettivo:'',
-};
-
-const STATE = {
-  view: 'home',
-  risposte: dbLoad(),
-  last: null,
-  form: { ...EMPTY_FORM },
-  step: 0,
-  dashFilter: 'all',
-  dashSort: 'date',
-};
-
-// ═══════════════════════════════════════════════════════════════
-//  HELPERS HTML
-// ═══════════════════════════════════════════════════════════════
-
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function pbar(pct, color) {
-  return `<div class="pbar"><div class="pbar-fill" style="width:${pct}%;background:${color}"></div></div>`;
-}
-
-function badge(text, fg, bg) {
-  return `<span class="badge" style="background:${bg};color:${fg}">${esc(text)}</span>`;
-}
-
-function metricCard(label, val, unit, color) {
-  return `<div class="metric"><span class="m-label">${label}</span><span class="m-val" style="color:${color}">${val}<span class="m-unit">${unit}</span></span></div>`;
-}
-
-function radioOpt(key, val, selected) {
-  const act = selected === val;
-  return `
-  <label style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:8px;cursor:pointer;
-    border:1.5px solid ${act?'var(--blue)':'var(--border)'};
-    background:${act?'var(--blueL)':'transparent'};transition:all 0.15s"
-    onclick="setField('${esc(key)}','${esc(val)}')">
-    <span style="width:15px;height:15px;border-radius:50%;flex-shrink:0;
-      border:2px solid ${act?'var(--blue)':'#aaa'};
-      background:${act?'var(--blue)':'transparent'};
-      display:flex;align-items:center;justify-content:center">
-      ${act?'<span style="width:5px;height:5px;border-radius:50%;background:#fff"></span>':''}
-    </span>
-    <span style="font-size:13px">${esc(val)}</span>
-  </label>`;
-}
-
-function checkOpt(key, val, checked) {
-  return `
-  <label style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:8px;cursor:pointer;
-    border:1.5px solid ${checked?'var(--teal)':'var(--border)'};
-    background:${checked?'var(--tealL)':'transparent'};transition:all 0.15s"
-    onclick="toggleMulti('${esc(key)}','${esc(val)}')">
-    <span style="width:15px;height:15px;border-radius:4px;flex-shrink:0;
-      border:2px solid ${checked?'var(--teal)':'#aaa'};
-      background:${checked?'var(--teal)':'transparent'};
-      display:flex;align-items:center;justify-content:center">
-      ${checked?'<span style="color:#fff;font-size:10px;font-weight:700">✓</span>':''}
-    </span>
-    <span style="font-size:13px">${esc(val)}</span>
-  </label>`;
-}
-
-function scaleInput(key, val) {
-  return `<div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
-    ${[1,2,3,4,5].map(n => {
-      const act = n <= val;
-      return `<button onclick="setField('${key}',${n})" style="width:42px;height:42px;border-radius:8px;padding:0;font-weight:500;font-size:15px;
-        border:1.5px solid ${act?'var(--blue)':'var(--border)'};
-        background:${act?'var(--blue)':'transparent'};
-        color:${act?'#fff':'var(--muted)'}">${n}</button>`;
-    }).join('')}
-    <span style="font-size:12px;color:var(--muted);margin-left:4px">${val?val+' / 5':'seleziona'}</span>
-  </div>`;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  VIEWS
-// ═══════════════════════════════════════════════════════════════
-
-function navBar() {
-  const tabs = [['home','Home'],['survey','Questionario'],['dashboard','Dashboard'],['report','Report']];
-  return `
-  <nav style="padding:0.75rem 1.5rem;border-bottom:0.5px solid var(--border);
-    display:flex;align-items:center;justify-content:space-between;
-    background:var(--bg);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px">
-    <div>
-      <strong style="font-size:15px">Welfare Aziendale</strong>
-      <span style="font-size:11px;color:var(--muted);margin-left:8px">Survey Platform</span>
-    </div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
-      ${tabs.map(([v,l]) => `
-        <button onclick="goTo('${v}')" style="${STATE.view===v
-          ?'background:var(--blue);color:#fff;border-color:var(--blue)':''}">${l}</button>
-      `).join('')}
-    </div>
-  </nav>`;
-}
-
-function homeView() {
-  return `
+<!-- ═══ HOME ═══ -->
+<div id="view-home" class="view active">
   <div style="text-align:center;padding:2rem 0 1.5rem">
     <div style="font-size:48px;margin-bottom:10px">🏢</div>
     <h1 style="font-size:22px;font-weight:600;margin-bottom:8px">Questionario Welfare Aziendale</h1>
     <p style="color:var(--muted);max-width:500px;margin:0 auto 1.5rem;line-height:1.7">
-      Strumento di raccolta e analisi dell'interesse delle PMI verso il welfare aziendale.
-      I dati si accumulano nel tempo e generano report con score predittivi.
+      Raccolta e analisi dell'interesse delle PMI verso il welfare aziendale.<br>
+      I dati si accumulano nel tempo generando report con score predittivi.
     </p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button onclick="goTo('survey')"
-        style="background:var(--blue);color:#fff;border-color:var(--blue);padding:10px 24px;font-weight:500;font-size:14px">
-        ✏️ Compila questionario
-      </button>
-      <button onclick="goTo('dashboard')" style="padding:10px 24px;font-size:14px">📊 Dashboard</button>
+      <button onclick="showView('survey')" style="background:var(--blue);color:#fff;border-color:var(--blue);padding:10px 24px;font-weight:500;font-size:14px">✏️ Compila questionario</button>
+      <button onclick="showView('dashboard')" style="padding:10px 24px;font-size:14px">📊 Dashboard</button>
     </div>
   </div>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem">
-    ${[
-      ['📋','4 sezioni','Profilo · Clima · Welfare · Interesse'],
-      ['🧮','Score AI','Algoritmo predittivo 0–100'],
-      ['📈','Dashboard','Analisi aggregata in tempo reale'],
-      ['💾','Database','Accumulo progressivo delle risposte'],
-      ['📤','Export CSV','Per analisi esterne in Excel'],
-    ].map(([ic,t,d]) => `
-      <div class="card" style="text-align:center;padding:1rem">
-        <div style="font-size:22px;margin-bottom:6px">${ic}</div>
-        <p style="font-weight:500;font-size:13px;margin-bottom:3px">${t}</p>
-        <p style="font-size:11px;color:var(--muted)">${d}</p>
-      </div>`).join('')}
+  <div class="grid-auto" style="margin-bottom:1rem">
+    <div class="card" style="text-align:center;padding:1rem"><div style="font-size:22px;margin-bottom:6px">📋</div><p style="font-weight:500;font-size:13px;margin-bottom:3px">4 sezioni</p><p style="font-size:11px;color:var(--muted)">Profilo · Clima · Welfare · Interesse</p></div>
+    <div class="card" style="text-align:center;padding:1rem"><div style="font-size:22px;margin-bottom:6px">🧮</div><p style="font-weight:500;font-size:13px;margin-bottom:3px">Score AI</p><p style="font-size:11px;color:var(--muted)">Algoritmo predittivo 0–100</p></div>
+    <div class="card" style="text-align:center;padding:1rem"><div style="font-size:22px;margin-bottom:6px">📈</div><p style="font-weight:500;font-size:13px;margin-bottom:3px">Dashboard</p><p style="font-size:11px;color:var(--muted)">Analisi aggregata live</p></div>
+    <div class="card" style="text-align:center;padding:1rem"><div style="font-size:22px;margin-bottom:6px">💾</div><p style="font-weight:500;font-size:13px;margin-bottom:3px">Database</p><p style="font-size:11px;color:var(--muted)">Accumulo progressivo locale</p></div>
+    <div class="card" style="text-align:center;padding:1rem"><div style="font-size:22px;margin-bottom:6px">📤</div><p style="font-weight:500;font-size:13px;margin-bottom:3px">Export CSV</p><p style="font-size:11px;color:var(--muted)">Per analisi esterne in Excel</p></div>
   </div>
+  <div id="home-count" class="card" style="display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span>📊 <strong id="home-count-n">0</strong> questionari nel database</span>
+    <button onclick="showView('dashboard')">Vedi Dashboard →</button>
+  </div>
+</div>
 
-  ${STATE.risposte.length ? `
-    <div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <span>📊 <strong>${STATE.risposte.length}</strong> questionari nel database</span>
-      <button onclick="goTo('dashboard')">Vedi Dashboard →</button>
-    </div>` : ''}
-  `;
-}
-
-function surveyView() {
-  const sec  = SECTIONS[STATE.step];
-  const prog = Math.round((STATE.step / (SECTIONS.length - 1)) * 100);
-  const f    = STATE.form;
-
-  let body = '';
-
-  if (sec.id === 'welcome') {
-    body = `
-    <div style="display:flex;flex-direction:column;gap:12px">
-      ${[
-        ['azienda',   'Nome azienda *',      'es. Rossi Srl',    'text'],
-        ['referente', 'Referente (opz.)',     'Nome e cognome',   'text'],
-        ['email',     'Email (opz.)',         'email@azienda.it', 'email'],
-      ].map(([k,l,ph,t]) => `
-        <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:5px">${l}</label>
-          <input type="${t}" value="${esc(f[k])}" placeholder="${ph}"
-            oninput="STATE.form['${k}']=this.value;render()">
-        </div>`).join('')}
-    </div>`;
-  }
-
-  else if (sec.id === 'review') {
-    const rows = [
-      ['Azienda', f.azienda], ['Referente', f.referente], ['Email', f.email],
-      ['Settore', f.settore], ['Dipendenti', f.dipendenti],
-      ['Soddisfazione', f.soddisfazione ? f.soddisfazione+'/5' : ''],
-      ['Difficoltà retention', f.difficolta], ['Turnover', f.turnover],
-      ['Welfare attuale', f.welfareAttuale],
-      ['Strumenti', (f.strumenti||[]).join(', ') || '—'],
-      ['Importanza benessere', f.importanzaBenessere ? f.importanzaBenessere+'/5' : ''],
-      ['Interesse soluzioni', f.interesseSoluzioni], ['Obiettivo', f.obiettivo],
-    ];
-    body = `<div style="font-size:13px">
-      ${rows.map(([k,v]) => `
-        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border)">
-          <span style="color:var(--muted)">${k}</span>
-          <span style="font-weight:500;text-align:right;max-width:58%">${esc(v)||'—'}</span>
-        </div>`).join('')}
-    </div>`;
-  }
-
-  else if (sec.fields) {
-    body = sec.fields.map(field => {
-      let inp = '';
-      if (field.type === 'radio') {
-        inp = `<div style="display:flex;flex-direction:column;gap:7px">
-          ${field.opts.map(o => radioOpt(field.key, o, f[field.key])).join('')}
-        </div>`;
-      } else if (field.type === 'multi') {
-        inp = `<div style="display:flex;flex-direction:column;gap:7px">
-          ${field.opts.map(o => checkOpt(field.key, o, (f[field.key]||[]).includes(o))).join('')}
-        </div>`;
-      } else if (field.type === 'scale') {
-        inp = scaleInput(field.key, f[field.key]);
-      }
-      return `<div style="margin-bottom:1.25rem">
-        <p style="font-weight:500;font-size:14px;margin-bottom:10px">${esc(field.label)}</p>
-        ${inp}
-      </div>`;
-    }).join('');
-  }
-
-  const ok = canAdvance();
-
-  return `
-  <div style="max-width:580px;margin:0 auto">
+<!-- ═══ SURVEY ═══ -->
+<div id="view-survey" class="view">
+  <div id="survey-form">
+    <!-- Progress -->
     <div style="margin-bottom:1.25rem">
       <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px">
-        <span>Passo ${STATE.step + 1} di ${SECTIONS.length}</span>
-        <span>${prog}%</span>
+        <span id="step-label">Passo 1 di 6</span><span id="step-pct">0%</span>
       </div>
-      ${pbar(prog,'var(--blue)')}
+      <div class="pbar"><div class="pbar-f" id="step-bar" style="width:0%;background:var(--blue)"></div></div>
     </div>
-    <div class="card">
-      <h2 style="font-size:17px;font-weight:600;margin-bottom:${sec.desc?'5px':'1.25rem'}">${esc(sec.title)}</h2>
-      ${sec.desc ? `<p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">${esc(sec.desc)}</p>` : ''}
-      ${body}
-      <div style="display:flex;gap:10px;margin-top:1.25rem">
-        ${STATE.step > 0
-          ? `<button onclick="prevStep()" style="flex:1">← Indietro</button>` : ''}
-        ${STATE.step < SECTIONS.length - 1
-          ? `<button onclick="nextStep()" ${ok?'':'disabled'} style="flex:2;${ok?'background:var(--blue);color:#fff;border-color:var(--blue)':''}">Avanti →</button>` : ''}
-        ${STATE.step === SECTIONS.length - 1
-          ? `<button onclick="submitForm()" style="flex:2;background:var(--green);color:#fff;border-color:var(--green)">✓ Invia questionario</button>` : ''}
-      </div>
-    </div>
-  </div>`;
-}
 
-function thankyouView() {
-  const e   = enrich(STATE.last);
-  const metrics = [
-    ['Interesse welfare',           e.score,       e.score>=70?'var(--green)':e.score>=40?'var(--amber)':'var(--red)', e.score+'/100'],
-    ['Propensione investimento HR',  e.propensione, 'var(--blue)',             e.propensione+'%'],
-    ['Probabilità attivazione 6m',  e.probabilita, 'var(--teal)',             e.probabilita+'%'],
-  ];
-  return `
+    <!-- STEP 0: Welcome -->
+    <div class="step active card" id="step-0">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:5px">Benvenuto</h2>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">Compila il questionario per valutare l'interesse della tua azienda verso il welfare aziendale. Richiede circa 3 minuti.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;color:var(--muted);margin-bottom:5px">Nome azienda *</label>
+          <input type="text" id="f-azienda" placeholder="es. Rossi Srl" autocomplete="organization" oninput="checkWelcome()">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--muted);margin-bottom:5px">Referente (opz.)</label>
+          <input type="text" id="f-referente" placeholder="Nome e cognome" autocomplete="name">
+        </div>
+        <div>
+          <label style="font-size:12px;color:var(--muted);margin-bottom:5px">Email (opz.)</label>
+          <input type="email" id="f-email" placeholder="email@azienda.it" autocomplete="email">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button id="btn-next-0" onclick="goNext()" disabled style="flex:1">Avanti →</button>
+      </div>
+    </div>
+
+    <!-- STEP 1: Sezione A -->
+    <div class="step card" id="step-1">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:1.25rem">Sezione A – Profilo azienda</h2>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">1. Settore di attività</p>
+        <div id="opts-settore">
+          <div class="opt" data-group="settore" data-val="Produzione" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Produzione</span></div>
+          <div class="opt" data-group="settore" data-val="Servizi" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Servizi</span></div>
+          <div class="opt" data-group="settore" data-val="Commercio" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Commercio</span></div>
+          <div class="opt" data-group="settore" data-val="Artigianato" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Artigianato</span></div>
+          <div class="opt" data-group="settore" data-val="Altro" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Altro</span></div>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">2. Numero dipendenti</p>
+        <div id="opts-dipendenti">
+          <div class="opt" data-group="dipendenti" data-val="1–5" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>1–5</span></div>
+          <div class="opt" data-group="dipendenti" data-val="6–20" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>6–20</span></div>
+          <div class="opt" data-group="dipendenti" data-val="21–50" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>21–50</span></div>
+          <div class="opt" data-group="dipendenti" data-val="50+" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>50+</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button onclick="goPrev()" style="flex:1">← Indietro</button>
+        <button id="btn-next-1" onclick="goNext()" disabled style="flex:2">Avanti →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Sezione B -->
+    <div class="step card" id="step-2">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:1.25rem">Sezione B – Clima aziendale</h2>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">3. Livello di soddisfazione dei dipendenti (1–5)</p>
+        <div class="scale-wrap" id="scale-soddisfazione">
+          <button class="scale-btn" data-key="soddisfazione" data-val="1" onclick="pickScale(this)">1</button>
+          <button class="scale-btn" data-key="soddisfazione" data-val="2" onclick="pickScale(this)">2</button>
+          <button class="scale-btn" data-key="soddisfazione" data-val="3" onclick="pickScale(this)">3</button>
+          <button class="scale-btn" data-key="soddisfazione" data-val="4" onclick="pickScale(this)">4</button>
+          <button class="scale-btn" data-key="soddisfazione" data-val="5" onclick="pickScale(this)">5</button>
+          <span id="lbl-soddisfazione" style="font-size:12px;color:var(--muted);margin-left:4px">seleziona</span>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">4. Difficoltà a trattenere personale qualificato?</p>
+        <div id="opts-difficolta">
+          <div class="opt" data-group="difficolta" data-val="Sì, spesso" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Sì, spesso</span></div>
+          <div class="opt" data-group="difficolta" data-val="A volte" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>A volte</span></div>
+          <div class="opt" data-group="difficolta" data-val="No" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>No</span></div>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">5. Turnover negli ultimi 2 anni:</p>
+        <div id="opts-turnover">
+          <div class="opt" data-group="turnover" data-val="Alto" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Alto</span></div>
+          <div class="opt" data-group="turnover" data-val="Medio" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Medio</span></div>
+          <div class="opt" data-group="turnover" data-val="Basso" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Basso</span></div>
+          <div class="opt" data-group="turnover" data-val="Non rilevato" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Non rilevato</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button onclick="goPrev()" style="flex:1">← Indietro</button>
+        <button id="btn-next-2" onclick="goNext()" disabled style="flex:2">Avanti →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Sezione C -->
+    <div class="step card" id="step-3">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:1.25rem">Sezione C – Welfare attuale</h2>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">6. Forme di welfare già attive in azienda?</p>
+        <div id="opts-welfareAttuale">
+          <div class="opt" data-group="welfareAttuale" data-val="No" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>No</span></div>
+          <div class="opt" data-group="welfareAttuale" data-val="Sì, minimo (bonus occasionali)" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Sì, minimo (bonus occasionali)</span></div>
+          <div class="opt" data-group="welfareAttuale" data-val="Sì, strutturato" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Sì, strutturato</span></div>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">7. Strumenti presenti (selezione multipla)</p>
+        <div id="opts-strumenti">
+          <div class="opt" data-key="strumenti" data-val="Sanità integrativa" onclick="pickMulti(this)"><span class="opt-box"><span class="opt-check">✓</span></span><span>Sanità integrativa</span></div>
+          <div class="opt" data-key="strumenti" data-val="Buoni spesa" onclick="pickMulti(this)"><span class="opt-box"><span class="opt-check">✓</span></span><span>Buoni spesa</span></div>
+          <div class="opt" data-key="strumenti" data-val="Previdenza complementare" onclick="pickMulti(this)"><span class="opt-box"><span class="opt-check">✓</span></span><span>Previdenza complementare</span></div>
+          <div class="opt" data-key="strumenti" data-val="Convenzioni" onclick="pickMulti(this)"><span class="opt-box"><span class="opt-check">✓</span></span><span>Convenzioni</span></div>
+          <div class="opt" data-key="strumenti" data-val="Nessuno" onclick="pickMulti(this)"><span class="opt-box"><span class="opt-check">✓</span></span><span>Nessuno</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button onclick="goPrev()" style="flex:1">← Indietro</button>
+        <button id="btn-next-3" onclick="goNext()" style="flex:2;background:var(--blue);color:#fff;border-color:var(--blue)">Avanti →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Sezione D -->
+    <div class="step card" id="step-4">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:1.25rem">Sezione D – Interesse e apertura</h2>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">8. Importanza del benessere dipendenti (1–5)</p>
+        <div class="scale-wrap" id="scale-importanzaBenessere">
+          <button class="scale-btn" data-key="importanzaBenessere" data-val="1" onclick="pickScale(this)">1</button>
+          <button class="scale-btn" data-key="importanzaBenessere" data-val="2" onclick="pickScale(this)">2</button>
+          <button class="scale-btn" data-key="importanzaBenessere" data-val="3" onclick="pickScale(this)">3</button>
+          <button class="scale-btn" data-key="importanzaBenessere" data-val="4" onclick="pickScale(this)">4</button>
+          <button class="scale-btn" data-key="importanzaBenessere" data-val="5" onclick="pickScale(this)">5</button>
+          <span id="lbl-importanzaBenessere" style="font-size:12px;color:var(--muted);margin-left:4px">seleziona</span>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">9. Interesse per soluzioni welfare a costo contenuto o fiscalmente vantaggiose?</p>
+        <div id="opts-interesseSoluzioni">
+          <div class="opt" data-group="interesseSoluzioni" data-val="Sì" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Sì</span></div>
+          <div class="opt" data-group="interesseSoluzioni" data-val="Forse" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Forse</span></div>
+          <div class="opt" data-group="interesseSoluzioni" data-val="No" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>No</span></div>
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-weight:500;font-size:14px;margin-bottom:10px">10. Obiettivo aziendale principale oggi</p>
+        <div id="opts-obiettivo">
+          <div class="opt" data-group="obiettivo" data-val="Ridurre costi" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Ridurre costi</span></div>
+          <div class="opt" data-group="obiettivo" data-val="Aumentare produttività" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Aumentare produttività</span></div>
+          <div class="opt" data-group="obiettivo" data-val="Fidelizzare dipendenti" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Fidelizzare dipendenti</span></div>
+          <div class="opt" data-group="obiettivo" data-val="Crescere organico" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Crescere organico</span></div>
+          <div class="opt" data-group="obiettivo" data-val="Altro" onclick="pickRadio(this)"><span class="opt-dot"><span class="opt-dot-inner"></span></span><span>Altro</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button onclick="goPrev()" style="flex:1">← Indietro</button>
+        <button id="btn-next-4" onclick="goNext()" disabled style="flex:2">Avanti →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Riepilogo -->
+    <div class="step card" id="step-5">
+      <h2 style="font-size:17px;font-weight:600;margin-bottom:5px">Riepilogo</h2>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">Controlla le risposte prima di inviare.</p>
+      <div id="review-content" style="font-size:13px"></div>
+      <div style="display:flex;gap:10px;margin-top:1.25rem">
+        <button onclick="goPrev()" style="flex:1">← Indietro</button>
+        <button onclick="submitForm()" style="flex:2;background:var(--green);color:#fff;border-color:var(--green)">✓ Invia questionario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ THANKYOU ═══ -->
+<div id="view-thankyou" class="view">
   <div style="max-width:540px;margin:0 auto;text-align:center">
     <div style="font-size:48px;margin-bottom:10px">✅</div>
-    <h2 style="font-size:20px;font-weight:600;margin-bottom:8px">Grazie, ${esc(e.azienda)}!</h2>
+    <h2 style="font-size:20px;font-weight:600;margin-bottom:8px" id="ty-title">Grazie!</h2>
     <p style="color:var(--muted);margin-bottom:1.5rem">Questionario registrato con successo nel database.</p>
     <div class="card" style="text-align:left;margin-bottom:1rem">
       <p style="font-weight:500;margin-bottom:14px">📊 Output predittivo</p>
-      ${metrics.map(([l,v,c,lbl]) => `
-        <div style="margin-bottom:14px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-            <span style="font-size:13px">${l}</span>
-            <span style="font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:${c}22;color:${c}">${lbl}</span>
-          </div>
-          ${pbar(v, c)}
-        </div>`).join('')}
+      <div id="ty-scores"></div>
     </div>
     <div style="display:flex;gap:10px">
-      <button onclick="goTo('home')" style="flex:1">← Home</button>
-      <button onclick="goTo('survey')" style="flex:1;background:var(--blue);color:#fff;border-color:var(--blue)">+ Nuovo questionario</button>
-      <button onclick="goTo('dashboard')" style="flex:1">📊 Dashboard</button>
+      <button onclick="showView('home')" style="flex:1">← Home</button>
+      <button onclick="startNewSurvey()" style="flex:1;background:var(--blue);color:#fff;border-color:var(--blue)">+ Nuovo</button>
+      <button onclick="showView('dashboard')" style="flex:1">📊 Dashboard</button>
     </div>
-  </div>`;
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="view-dashboard" class="view">
+  <div id="dash-content"></div>
+</div>
+
+<!-- ═══ REPORT ═══ -->
+<div id="view-report" class="view">
+  <div id="report-content"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATABASE
+// ═══════════════════════════════════════════════════════════
+const DB_KEY = 'welfare_v3';
+function dbLoad(){ try{ return JSON.parse(localStorage.getItem(DB_KEY)||'[]') }catch{ return [] } }
+function dbSave(a){ try{ localStorage.setItem(DB_KEY,JSON.stringify(a)) }catch{} }
+
+// ═══════════════════════════════════════════════════════════
+// STATO FORM — oggetto semplice, NON legato al DOM
+// ═══════════════════════════════════════════════════════════
+let FORM = {};
+let STEP = 0;
+let RISPOSTE = dbLoad();
+const TOTAL_STEPS = 6;
+
+function resetForm(){
+  FORM = {
+    azienda:'', referente:'', email:'',
+    settore:'', dipendenti:'',
+    soddisfazione:0, difficolta:'', turnover:'',
+    welfareAttuale:'', strumenti:[],
+    importanzaBenessere:0, interesseSoluzioni:'', obiettivo:''
+  };
+  STEP = 0;
 }
 
-function dashboardView() {
-  const all = STATE.risposte.map(enrich);
+// ═══════════════════════════════════════════════════════════
+// SCORING
+// ═══════════════════════════════════════════════════════════
+function calcScore(f){
+  let s = 0;
+  s += (f.soddisfazione||0) * 6;
+  if(f.difficolta==='Sì, spesso') s+=15; else if(f.difficolta==='A volte') s+=8;
+  s += ({No:5,'Sì, minimo (bonus occasionali)':12,'Sì, strutturato':4}[f.welfareAttuale]||0);
+  s += (f.importanzaBenessere||0) * 7;
+  if(f.interesseSoluzioni==='Sì') s+=15; else if(f.interesseSoluzioni==='Forse') s+=7;
+  s += ({'Fidelizzare dipendenti':5,'Aumentare produttività':4,'Crescere organico':3,'Ridurre costi':2,'Altro':1}[f.obiettivo]||0);
+  return Math.min(100, Math.round(s));
+}
+function calcProp(f){
+  let v = ({'50+':80,'21–50':65,'6–20':45,'1–5':30}[f.dipendenti]||40);
+  if(f.interesseSoluzioni==='Sì') v+=15;
+  if(f.welfareAttuale==='No') v-=10;
+  if(f.turnover==='Alto') v+=10;
+  return Math.min(100,Math.max(0,Math.round(v)));
+}
+function enrich(r){
+  const s=calcScore(r), p=calcProp(r);
+  return {...r, score:s, propensione:p, probabilita:Math.min(100,Math.round(s*.6+p*.4))};
+}
+function prioColor(s){ return s>=70?'var(--green)':s>=40?'var(--amber)':'var(--red)' }
+function prioBg(s){ return s>=70?'var(--greenL)':s>=40?'var(--amberL)':'var(--redL)' }
+function prioLabel(s){ return s>=70?'Alta':s>=40?'Media':'Bassa' }
 
-  if (!all.length) return `
-    <div class="card" style="text-align:center;padding:3rem">
-      <p style="font-size:36px;margin-bottom:10px">📊</p>
-      <p style="color:var(--muted)">Nessun dato ancora. Compila il primo questionario!</p>
-      <button onclick="goTo('survey')" style="margin-top:1rem;background:var(--blue);color:#fff;border-color:var(--blue)">Compila ora →</button>
-    </div>`;
+// ═══════════════════════════════════════════════════════════
+// NAVIGAZIONE VISTE
+// ═══════════════════════════════════════════════════════════
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelector('[data-view="'+name+'"]')?.classList.add('active');
+  if(name==='dashboard') renderDashboard();
+  if(name==='report') renderReport();
+  if(name==='home') updateHomeCount();
+  window.scrollTo(0,0);
+}
 
-  let shown = [...all];
-  if (STATE.dashFilter === 'high') shown = shown.filter(r => r.score >= 70);
-  if (STATE.dashFilter === 'mid')  shown = shown.filter(r => r.score >= 40 && r.score < 70);
-  if (STATE.dashFilter === 'low')  shown = shown.filter(r => r.score < 40);
-  shown.sort((a,b) => STATE.dashSort === 'score' ? b.score - a.score
-                     : STATE.dashSort === 'prob'  ? b.probabilita - a.probabilita
-                     : b.timestamp - a.timestamp);
+function updateHomeCount(){
+  const n = RISPOSTE.length;
+  const el = document.getElementById('home-count');
+  if(n>0){
+    el.style.display='flex';
+    document.getElementById('home-count-n').textContent=n;
+  } else {
+    el.style.display='none';
+  }
+}
 
-  const avg = k => Math.round(all.reduce((s,r) => s + r[k], 0) / all.length);
-  const count = fn => all.filter(fn).length;
-  const distrib = (items, key) => items.reduce((a,r) => ({...a, [r[key]]:(a[r[key]]||0)+1}), {});
+// ═══════════════════════════════════════════════════════════
+// NAVIGAZIONE STEP
+// ═══════════════════════════════════════════════════════════
+function updateStepUI(){
+  // Mostra step corrente
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.toggle('active', i===STEP);
+  });
+  // Progress bar
+  const pct = Math.round((STEP/(TOTAL_STEPS-1))*100);
+  document.getElementById('step-bar').style.width = pct+'%';
+  document.getElementById('step-label').textContent = 'Passo '+(STEP+1)+' di '+TOTAL_STEPS;
+  document.getElementById('step-pct').textContent = pct+'%';
+  // Riepilogo
+  if(STEP===5) buildReview();
+}
 
-  const settori = distrib(all, 'settore');
-  const dims    = distrib(all, 'dipendenti');
+function goNext(){
+  if(STEP===0){
+    FORM.azienda   = document.getElementById('f-azienda').value.trim();
+    FORM.referente = document.getElementById('f-referente').value.trim();
+    FORM.email     = document.getElementById('f-email').value.trim();
+  }
+  STEP++;
+  updateStepUI();
+  updateNextBtn();
+  window.scrollTo(0,0);
+}
 
-  return `
+function goPrev(){
+  STEP--;
+  updateStepUI();
+  updateNextBtn();
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════════════════
+// WELCOME: check in tempo reale senza re-render
+// ═══════════════════════════════════════════════════════════
+function checkWelcome(){
+  const val = document.getElementById('f-azienda').value.trim();
+  const btn = document.getElementById('btn-next-0');
+  const ok  = val.length >= 2;
+  btn.disabled = !ok;
+  btn.style.background   = ok ? 'var(--blue)' : '';
+  btn.style.color        = ok ? '#fff' : '';
+  btn.style.borderColor  = ok ? 'var(--blue)' : '';
+}
+
+// ═══════════════════════════════════════════════════════════
+// RADIO / MULTI / SCALE
+// ═══════════════════════════════════════════════════════════
+function pickRadio(el){
+  const group = el.dataset.group;
+  const val   = el.dataset.val;
+  // Deseleziona tutti nel gruppo
+  document.querySelectorAll('[data-group="'+group+'"]').forEach(o=>o.classList.remove('selected'));
+  // Seleziona questo
+  el.classList.add('selected');
+  // Salva nel form
+  FORM[group] = val;
+  // Aggiorna bottone avanti
+  updateNextBtn();
+}
+
+function pickMulti(el){
+  const key = el.dataset.key;
+  const val = el.dataset.val;
+  if(!FORM[key]) FORM[key]=[];
+  if(el.classList.contains('selected-teal')){
+    el.classList.remove('selected-teal');
+    FORM[key] = FORM[key].filter(v=>v!==val);
+  } else {
+    el.classList.add('selected-teal');
+    FORM[key].push(val);
+  }
+}
+
+function pickScale(btn){
+  const key = btn.dataset.key;
+  const val = parseInt(btn.dataset.val);
+  FORM[key] = val;
+  // Aggiorna stile bottoni
+  document.querySelectorAll('[data-key="'+key+'"]').forEach(b=>{
+    b.classList.toggle('on', parseInt(b.dataset.val)<=val);
+  });
+  // Aggiorna label
+  document.getElementById('lbl-'+key).textContent = val+' / 5';
+  // Aggiorna bottone avanti
+  updateNextBtn();
+}
+
+// ═══════════════════════════════════════════════════════════
+// VALIDAZIONE PER STEP
+// ═══════════════════════════════════════════════════════════
+function canGoNext(){
+  if(STEP===0) return FORM.azienda.trim().length>=2;
+  if(STEP===1) return FORM.settore!=='' && FORM.dipendenti!=='';
+  if(STEP===2) return FORM.soddisfazione>0 && FORM.difficolta!=='' && FORM.turnover!=='';
+  if(STEP===3) return FORM.welfareAttuale!==''; // strumenti opzionale
+  if(STEP===4) return FORM.importanzaBenessere>0 && FORM.interesseSoluzioni!=='' && FORM.obiettivo!=='';
+  return true;
+}
+
+function updateNextBtn(){
+  const btn = document.getElementById('btn-next-'+STEP);
+  if(!btn) return;
+  const ok = canGoNext();
+  btn.disabled = !ok;
+  btn.style.background  = ok ? 'var(--blue)' : '';
+  btn.style.color       = ok ? '#fff' : '';
+  btn.style.borderColor = ok ? 'var(--blue)' : '';
+}
+
+// ═══════════════════════════════════════════════════════════
+// RIEPILOGO
+// ═══════════════════════════════════════════════════════════
+function buildReview(){
+  const rows = [
+    ['Azienda', FORM.azienda], ['Referente', FORM.referente||'—'], ['Email', FORM.email||'—'],
+    ['Settore', FORM.settore], ['Dipendenti', FORM.dipendenti],
+    ['Soddisfazione', FORM.soddisfazione ? FORM.soddisfazione+'/5' : '—'],
+    ['Difficoltà retention', FORM.difficolta], ['Turnover', FORM.turnover],
+    ['Welfare attuale', FORM.welfareAttuale],
+    ['Strumenti', (FORM.strumenti||[]).length ? FORM.strumenti.join(', ') : '—'],
+    ['Importanza benessere', FORM.importanzaBenessere ? FORM.importanzaBenessere+'/5' : '—'],
+    ['Interesse soluzioni', FORM.interesseSoluzioni], ['Obiettivo', FORM.obiettivo],
+  ];
+  document.getElementById('review-content').innerHTML = rows.map(([k,v])=>`
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:.5px solid var(--border)">
+      <span style="color:var(--muted)">${k}</span>
+      <span style="font-weight:500;text-align:right;max-width:58%">${v||'—'}</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SUBMIT
+// ═══════════════════════════════════════════════════════════
+function submitForm(){
+  const rec = {...FORM, id:Date.now().toString(), timestamp:Date.now()};
+  RISPOSTE.push(rec);
+  dbSave(RISPOSTE);
+  // Thank you
+  document.getElementById('ty-title').textContent = 'Grazie, '+rec.azienda+'!';
+  const e = enrich(rec);
+  const metrics = [
+    ['Interesse welfare', e.score, prioColor(e.score), e.score+'/100 · '+prioLabel(e.score)],
+    ['Propensione investimento HR', e.propensione, 'var(--blue)', e.propensione+'%'],
+    ['Probabilità attivazione 6 mesi', e.probabilita, 'var(--teal)', e.probabilita+'%'],
+  ];
+  document.getElementById('ty-scores').innerHTML = metrics.map(([l,v,c,lbl])=>`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+        <span style="font-size:13px">${l}</span>
+        <span class="badge" style="background:${c}22;color:${c}">${lbl}</span>
+      </div>
+      <div class="pbar"><div class="pbar-f" style="width:${v}%;background:${c}"></div></div>
+    </div>`).join('');
+  showView('thankyou');
+}
+
+function startNewSurvey(){
+  resetForm();
+  clearFormUI();
+  showView('survey');
+  updateStepUI();
+}
+
+function clearFormUI(){
+  // Reset input testo
+  ['f-azienda','f-referente','f-email'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  // Reset radio
+  document.querySelectorAll('.opt.selected').forEach(el=>el.classList.remove('selected'));
+  document.querySelectorAll('.opt.selected-teal').forEach(el=>el.classList.remove('selected-teal'));
+  // Reset scale
+  document.querySelectorAll('.scale-btn.on').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('[id^="lbl-"]').forEach(el=>el.textContent='seleziona');
+  // Reset bottone welcome
+  const btn=document.getElementById('btn-next-0');
+  if(btn){btn.disabled=true;btn.style.background='';btn.style.color='';btn.style.borderColor='';}
+}
+
+// ═══════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════
+let dashFilter='all', dashSort='date';
+
+function renderDashboard(){
+  const all = RISPOSTE.map(enrich);
+  const el = document.getElementById('dash-content');
+  if(!all.length){
+    el.innerHTML=`<div class="card" style="text-align:center;padding:3rem"><p style="font-size:36px;margin-bottom:10px">📊</p><p style="color:var(--muted)">Nessun dato ancora.</p><button onclick="showView('survey')" style="margin-top:1rem;background:var(--blue);color:#fff;border-color:var(--blue)">Compila ora →</button></div>`;
+    return;
+  }
+  let shown=[...all];
+  if(dashFilter==='high') shown=shown.filter(r=>r.score>=70);
+  if(dashFilter==='mid')  shown=shown.filter(r=>r.score>=40&&r.score<70);
+  if(dashFilter==='low')  shown=shown.filter(r=>r.score<40);
+  shown.sort((a,b)=>dashSort==='score'?b.score-a.score:dashSort==='prob'?b.probabilita-a.probabilita:b.timestamp-a.timestamp);
+
+  const avg=k=>Math.round(all.reduce((s,r)=>s+r[k],0)/all.length);
+  const settori=all.reduce((a,r)=>({...a,[r.settore]:(a[r.settore]||0)+1}),{});
+  const dims=all.reduce((a,r)=>({...a,[r.dipendenti]:(a[r.dipendenti]||0)+1}),{});
+
+  el.innerHTML=`
   <div style="display:flex;flex-direction:column;gap:12px">
-
-    <!-- KPI -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px">
-      ${metricCard('Risposte totali', all.length, '', 'var(--blue)')}
-      ${metricCard('Score medio', avg('score'), '/100', 'var(--teal)')}
-      ${metricCard('Alta priorità ≥70', count(r=>r.score>=70), '', 'var(--green)')}
-      ${metricCard('Prob. media 6m', avg('probabilita'), '%', 'var(--amber)')}
+    <div class="grid-auto">
+      <div class="metric"><div class="ml">Risposte totali</div><div class="mv" style="color:var(--blue)">${all.length}</div></div>
+      <div class="metric"><div class="ml">Score medio</div><div class="mv" style="color:var(--teal)">${avg('score')}<span class="mu">/100</span></div></div>
+      <div class="metric"><div class="ml">Alta priorità ≥70</div><div class="mv" style="color:var(--green)">${all.filter(r=>r.score>=70).length}</div></div>
+      <div class="metric"><div class="ml">Prob. media 6m</div><div class="mv" style="color:var(--amber)">${avg('probabilita')}<span class="mu">%</span></div></div>
     </div>
-
-    <!-- Distribuzione -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="grid2">
       <div class="card">
         <p style="font-size:13px;font-weight:500;margin-bottom:10px">Per settore</p>
-        ${Object.entries(settori).map(([s,n]) => `
-          <div style="margin-bottom:8px">
-            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
-              <span>${esc(s)}</span><strong>${n}</strong>
-            </div>
-            ${pbar(Math.round((n/all.length)*100), 'var(--blue)')}
-          </div>`).join('')}
+        ${Object.entries(settori).map(([s,n])=>`<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${s}</span><strong>${n}</strong></div><div class="pbar"><div class="pbar-f" style="width:${Math.round((n/all.length)*100)}%;background:var(--blue)"></div></div></div>`).join('')}
       </div>
       <div class="card">
         <p style="font-size:13px;font-weight:500;margin-bottom:10px">Per dimensione</p>
-        ${['1–5','6–20','21–50','50+'].map(d => `
-          <div style="margin-bottom:8px">
-            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
-              <span>${d} dip.</span><strong>${dims[d]||0}</strong>
-            </div>
-            ${pbar(Math.round(((dims[d]||0)/all.length)*100), 'var(--teal)')}
-          </div>`).join('')}
+        ${['1–5','6–20','21–50','50+'].map(d=>`<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>${d} dip.</span><strong>${dims[d]||0}</strong></div><div class="pbar"><div class="pbar-f" style="width:${Math.round(((dims[d]||0)/all.length)*100)}%;background:var(--teal)"></div></div></div>`).join('')}
       </div>
     </div>
-
-    <!-- Tabella -->
     <div class="card">
       <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
-        ${[['all','Tutti'],['high','Alta ≥70'],['mid','Media 40–69'],['low','Bassa <40']].map(([v,l]) => `
-          <button onclick="setDashFilter('${v}')"
-            style="font-size:12px;padding:4px 10px;${STATE.dashFilter===v
-              ?'background:var(--blue);color:#fff;border-color:var(--blue)':''}">${l}</button>
-        `).join('')}
-        <select onchange="setDashSort(this.value)"
-          style="margin-left:auto;font-size:12px;padding:4px 8px;width:auto">
-          <option value="date"  ${STATE.dashSort==='date' ?'selected':''}>Ordina: data</option>
-          <option value="score" ${STATE.dashSort==='score'?'selected':''}>Ordina: score</option>
-          <option value="prob"  ${STATE.dashSort==='prob' ?'selected':''}>Ordina: probabilità</option>
+        ${[['all','Tutti'],['high','Alta ≥70'],['mid','Media 40–69'],['low','Bassa <40']].map(([v,l])=>`<button onclick="dashFilter='${v}';renderDashboard()" style="font-size:12px;padding:4px 10px;${dashFilter===v?'background:var(--blue);color:#fff;border-color:var(--blue)':''}">${l}</button>`).join('')}
+        <select onchange="dashSort=this.value;renderDashboard()" style="margin-left:auto;font-size:12px;padding:4px 8px;width:auto">
+          <option value="date"  ${dashSort==='date' ?'selected':''}>Data</option>
+          <option value="score" ${dashSort==='score'?'selected':''}>Score</option>
+          <option value="prob"  ${dashSort==='prob' ?'selected':''}>Probabilità</option>
         </select>
       </div>
       <div style="overflow-x:auto">
         <table>
-          <thead>
-            <tr>
-              ${['Azienda','Settore','Dip.','Score','HR%','6m%','Priorità',''].map(h=>`<th>${h}</th>`).join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${shown.map(r => {
-              const [lbl,fg,bg] = priority(r.score);
-              return `
-              <tr>
-                <td><strong>${esc(r.azienda||'—')}</strong></td>
-                <td style="color:var(--muted)">${esc(r.settore)}</td>
-                <td style="color:var(--muted)">${esc(r.dipendenti)}</td>
-                <td>
-                  <strong>${r.score}</strong>
-                  <div style="width:44px;height:3px;background:var(--bg3);border-radius:2px;margin-top:3px">
-                    <div style="width:${r.score}%;height:100%;background:${fg};border-radius:2px"></div>
-                  </div>
-                </td>
-                <td>${r.propensione}%</td>
-                <td>${r.probabilita}%</td>
-                <td>${badge(lbl, fg, bg)}</td>
-                <td>
-                  <button onclick="deleteRecord('${r.id}')"
-                    style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red)">✕</button>
-                </td>
-              </tr>`;
-            }).join('')}
-          </tbody>
+          <thead><tr>${['Azienda','Settore','Dip.','Score','HR%','6m%','Priorità',''].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${shown.map(r=>`<tr>
+            <td><strong>${r.azienda||'—'}</strong></td>
+            <td style="color:var(--muted)">${r.settore||'—'}</td>
+            <td style="color:var(--muted)">${r.dipendenti||'—'}</td>
+            <td><strong>${r.score}</strong><div style="width:44px;height:3px;background:var(--bg3);border-radius:2px;margin-top:3px"><div style="width:${r.score}%;height:100%;background:${prioColor(r.score)};border-radius:2px"></div></div></td>
+            <td>${r.propensione}%</td>
+            <td>${r.probabilita}%</td>
+            <td><span class="badge" style="background:${prioBg(r.score)};color:${prioColor(r.score)}">${prioLabel(r.score)}</span></td>
+            <td><button onclick="deleteRec('${r.id}')" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red)">✕</button></td>
+          </tr>`).join('')}</tbody>
         </table>
+        ${!shown.length?'<p style="text-align:center;color:var(--muted);padding:1rem">Nessun risultato.</p>':''}
       </div>
-      ${shown.length === 0 ? `<p style="text-align:center;color:var(--muted);padding:1rem">Nessun risultato per questo filtro.</p>` : ''}
     </div>
   </div>`;
 }
 
-function reportView() {
-  const all = STATE.risposte.map(enrich);
+function deleteRec(id){
+  if(!confirm('Eliminare questa risposta?')) return;
+  RISPOSTE = RISPOSTE.filter(r=>r.id!==id);
+  dbSave(RISPOSTE);
+  renderDashboard();
+}
 
-  if (!all.length) return `
-    <div class="card" style="text-align:center;padding:3rem">
-      <p style="color:var(--muted)">Nessun dato disponibile.</p>
-    </div>`;
+// ═══════════════════════════════════════════════════════════
+// REPORT
+// ═══════════════════════════════════════════════════════════
+function renderReport(){
+  const all = RISPOSTE.map(enrich);
+  const el  = document.getElementById('report-content');
+  if(!all.length){
+    el.innerHTML=`<div class="card" style="text-align:center;padding:3rem"><p style="color:var(--muted)">Nessun dato disponibile.</p></div>`;
+    return;
+  }
+  const avg  = k=>Math.round(all.reduce((s,r)=>s+r[k],0)/all.length);
+  const top3 = [...all].sort((a,b)=>b.score-a.score).slice(0,3);
+  const wNo  = all.filter(r=>r.welfareAttuale==='No').length;
+  const iSi  = all.filter(r=>r.interesseSoluzioni==='Sì').length;
+  const objD = all.reduce((a,r)=>({...a,[r.obiettivo]:(a[r.obiettivo]||0)+1}),{});
+  const topObj = Object.entries(objD).sort((a,b)=>b[1]-a[1])[0];
+  const avgS = avg('score');
+  const mkt  = avgS>=60?'recettivo':avgS>=40?'in maturazione':'da sensibilizzare';
 
-  const avg     = k => Math.round(all.reduce((s,r) => s+r[k], 0) / all.length);
-  const top3    = [...all].sort((a,b) => b.score - a.score).slice(0,3);
-  const wNo     = all.filter(r => r.welfareAttuale === 'No').length;
-  const iSi     = all.filter(r => r.interesseSoluzioni === 'Sì').length;
-  const objDist = all.reduce((a,r) => ({...a,[r.obiettivo]:(a[r.obiettivo]||0)+1}), {});
-  const topObj  = Object.entries(objDist).sort((a,b) => b[1]-a[1])[0];
-  const avgS    = avg('score');
-  const mkt     = avgS>=60?'recettivo':avgS>=40?'in maturazione':'da sensibilizzare';
-
-  const bands = [
-    ['🔴 Bassa < 40',   'var(--red)',   r => r.score < 40],
-    ['🟡 Media 40–69',  'var(--amber)', r => r.score >= 40 && r.score < 70],
-    ['🟢 Alta ≥ 70',    'var(--green)', r => r.score >= 70],
-  ];
-
-  return `
+  el.innerHTML=`
   <div style="display:flex;flex-direction:column;gap:12px">
-
-    <!-- Header report -->
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
-        <h3 style="font-size:15px;font-weight:600">
-          Report sintetico — ${new Date().toLocaleDateString('it-IT',{year:'numeric',month:'long',day:'numeric'})}
-        </h3>
-        <button onclick="dbExport(STATE.risposte)"
-          style="font-size:12px;padding:5px 12px;background:var(--green);color:#fff;border-color:var(--green)">
-          ↓ Esporta CSV
-        </button>
+        <h3 style="font-size:15px;font-weight:600">Report — ${new Date().toLocaleDateString('it-IT',{year:'numeric',month:'long',day:'numeric'})}</h3>
+        <button onclick="exportCSV()" style="font-size:12px;padding:5px 12px;background:var(--green);color:#fff;border-color:var(--green)">↓ Esporta CSV</button>
       </div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:1rem">
-        ${metricCard('Campione', all.length, ' az.', 'var(--blue)')}
-        ${metricCard('Score medio', avg('score'), '/100', 'var(--teal)')}
-        ${metricCard('Prob. media 6m', avg('probabilita'), '%', 'var(--amber)')}
-        ${metricCard('Interesse "Sì"', Math.round((iSi/all.length)*100), '%', 'var(--green)')}
+      <div class="grid-auto" style="margin-bottom:1rem">
+        <div class="metric"><div class="ml">Campione</div><div class="mv" style="color:var(--blue)">${all.length}<span class="mu"> az.</span></div></div>
+        <div class="metric"><div class="ml">Score medio</div><div class="mv" style="color:var(--teal)">${avg('score')}<span class="mu">/100</span></div></div>
+        <div class="metric"><div class="ml">Prob. media 6m</div><div class="mv" style="color:var(--amber)">${avg('probabilita')}<span class="mu">%</span></div></div>
+        <div class="metric"><div class="ml">Interesse "Sì"</div><div class="mv" style="color:var(--green)">${Math.round((iSi/all.length)*100)}<span class="mu">%</span></div></div>
       </div>
-
-      <div style="padding:12px 0;border-top:0.5px solid var(--border)">
+      <div style="padding:12px 0;border-top:.5px solid var(--border)">
         <p style="font-size:13px;font-weight:500;margin-bottom:8px">💡 Insight chiave</p>
-        <ul style="padding-left:18px;font-size:13px;line-height:2.1;color:var(--text)">
-          <li><strong>${wNo}</strong> aziende su ${all.length} (${Math.round((wNo/all.length)*100)}%) non hanno ancora welfare attivo — target prioritario.</li>
-          ${topObj ? `<li>Obiettivo più citato: <strong>${esc(topObj[0])}</strong> (${topObj[1]} aziende su ${all.length}).</li>` : ''}
-          <li><strong>${all.filter(r=>r.score>=70).length}</strong> aziende con score ≥ 70 — alta priorità di contatto commerciale.</li>
-          <li>Mercato complessivo valutato: <strong>${mkt}</strong> (score medio ${avgS}/100).</li>
+        <ul style="padding-left:18px;font-size:13px;line-height:2.1">
+          <li><strong>${wNo}</strong> aziende su ${all.length} (${Math.round((wNo/all.length)*100)}%) non hanno welfare attivo — target prioritario.</li>
+          ${topObj?`<li>Obiettivo più citato: <strong>${topObj[0]}</strong> (${topObj[1]} aziende).</li>`:''}
+          <li><strong>${all.filter(r=>r.score>=70).length}</strong> aziende con score ≥ 70 — alta priorità commerciale.</li>
+          <li>Mercato valutato: <strong>${mkt}</strong> (score medio ${avgS}/100).</li>
         </ul>
       </div>
     </div>
-
-    <!-- Top 3 -->
     <div class="card">
-      <p style="font-size:13px;font-weight:500;margin-bottom:12px">🏆 Top 3 aziende per interesse welfare</p>
-      ${top3.map((r,i) => {
-        const medal = ['#FFD700','#C0C0C0','#CD7F32'][i];
-        return `
-        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;${i<2?'border-bottom:0.5px solid var(--border)':''}">
-          <span style="width:26px;height:26px;border-radius:50%;background:${medal};
-            display:flex;align-items:center;justify-content:center;
-            font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${i+1}</span>
-          <div style="flex:1">
-            <p style="font-weight:600;font-size:14px;margin-bottom:2px">${esc(r.azienda)}</p>
-            <p style="font-size:12px;color:var(--muted)">${esc(r.settore)} · ${esc(r.dipendenti)} dip. · Prob. ${r.probabilita}%</p>
-          </div>
-          ${badge(r.score+'/100', 'var(--green)', 'var(--greenL)')}
-        </div>`;
-      }).join('')}
+      <p style="font-size:13px;font-weight:500;margin-bottom:12px">🏆 Top 3 per interesse welfare</p>
+      ${top3.map((r,i)=>`
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;${i<2?'border-bottom:.5px solid var(--border)':''}">
+        <span style="width:26px;height:26px;border-radius:50%;background:${['#FFD700','#C0C0C0','#CD7F32'][i]};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${i+1}</span>
+        <div style="flex:1"><p style="font-weight:600;font-size:14px;margin-bottom:2px">${r.azienda}</p><p style="font-size:12px;color:var(--muted)">${r.settore} · ${r.dipendenti} dip. · Prob. ${r.probabilita}%</p></div>
+        <span class="badge" style="background:var(--greenL);color:var(--green)">${r.score}/100</span>
+      </div>`).join('')}
     </div>
-
-    <!-- Distribuzione score -->
     <div class="card">
       <p style="font-size:13px;font-weight:500;margin-bottom:12px">📈 Distribuzione score welfare</p>
-      ${bands.map(([l,c,fn]) => {
-        const n = all.filter(fn).length;
-        const pct = Math.round((n/all.length)*100);
-        return `
-        <div style="margin-bottom:12px">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
-            <span>${l}</span>
-            <strong>${n} aziende (${pct}%)</strong>
-          </div>
-          ${pbar(pct, c)}
-        </div>`;
+      ${[['🟢 Alta ≥ 70','var(--green)',r=>r.score>=70],['🟡 Media 40–69','var(--amber)',r=>r.score>=40&&r.score<70],['🔴 Bassa < 40','var(--red)',r=>r.score<40]].map(([l,c,fn])=>{
+        const n=all.filter(fn).length, pct=Math.round((n/all.length)*100);
+        return`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>${l}</span><strong>${n} (${pct}%)</strong></div><div class="pbar"><div class="pbar-f" style="width:${pct}%;background:${c}"></div></div></div>`;
       }).join('')}
     </div>
-
-    <!-- Obiettivi aziendali -->
     <div class="card">
-      <p style="font-size:13px;font-weight:500;margin-bottom:12px">🎯 Obiettivi aziendali dichiarati</p>
-      ${Object.entries(objDist).sort((a,b)=>b[1]-a[1]).map(([obj,n]) => {
-        const pct = Math.round((n/all.length)*100);
-        return `
-        <div style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
-            <span>${esc(obj)}</span><strong>${n} (${pct}%)</strong>
-          </div>
-          ${pbar(pct, 'var(--blue)')}
-        </div>`;
+      <p style="font-size:13px;font-weight:500;margin-bottom:12px">🎯 Obiettivi aziendali</p>
+      ${Object.entries(objD).sort((a,b)=>b[1]-a[1]).map(([o,n])=>{
+        const pct=Math.round((n/all.length)*100);
+        return`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>${o}</span><strong>${n} (${pct}%)</strong></div><div class="pbar"><div class="pbar-f" style="width:${pct}%;background:var(--blue)"></div></div></div>`;
       }).join('')}
     </div>
-
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  CONTROLLER
-// ═══════════════════════════════════════════════════════════════
-
-function canAdvance() {
-  const sec = SECTIONS[STATE.step];
-  if (sec.id === 'welcome') return STATE.form.azienda.trim().length >= 2;
-  if (sec.id === 'review')  return true;
-  if (!sec.fields) return true;
-  return sec.fields.every(f =>
-    f.type === 'multi' ? true :
-    f.type === 'scale' ? STATE.form[f.key] > 0 :
-    STATE.form[f.key] !== ''
-  );
+function exportCSV(){
+  const all=RISPOSTE.map(enrich);
+  const cols=['ID','Data','Azienda','Referente','Email','Settore','Dipendenti',
+    'Soddisfazione','Difficoltà retention','Turnover','Welfare attuale','Strumenti',
+    'Importanza benessere','Interesse soluzioni','Obiettivo','Score','Propensione HR','Probabilità 6m'];
+  const rows=all.map(r=>[r.id,new Date(r.timestamp).toLocaleDateString('it-IT'),
+    r.azienda,r.referente,r.email,r.settore,r.dipendenti,r.soddisfazione,
+    r.difficolta,r.turnover,r.welfareAttuale,(r.strumenti||[]).join('|'),
+    r.importanzaBenessere,r.interesseSoluzioni,r.obiettivo,r.score,r.propensione,r.probabilita].join(';'));
+  const blob=new Blob(['\uFEFF'+[cols.join(';'),...rows].join('\n')],{type:'text/csv;charset=utf-8;'});
+  Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:'welfare_export.csv'}).click();
 }
 
-function goTo(v) {
-  STATE.view = v;
-  if (v === 'survey') {
-    STATE.step = 0;
-    STATE.form = { ...EMPTY_FORM };
-  }
-  render();
-}
+// ═══════════════════════════════════════════════════════════
+// NAV CLICK
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>showView(btn.dataset.view));
+});
 
-function prevStep() { STATE.step--; render(); }
-function nextStep() { if (canAdvance()) { STATE.step++; render(); } }
-
-function setField(key, val) {
-  STATE.form[key] = typeof val === 'number' ? val : val;
-  render();
-}
-
-function toggleMulti(key, val) {
-  const arr = STATE.form[key] || [];
-  STATE.form[key] = arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val];
-  render();
-}
-
-function submitForm() {
-  const rec = { ...STATE.form, id: Date.now().toString(), timestamp: Date.now() };
-  STATE.risposte = [...STATE.risposte, rec];
-  dbSave(STATE.risposte);
-  STATE.last = rec;
-  STATE.view = 'thankyou';
-  render();
-}
-
-function setDashFilter(v) { STATE.dashFilter = v; render(); }
-function setDashSort(v)   { STATE.dashSort   = v; render(); }
-
-function deleteRecord(id) {
-  if (!confirm('Eliminare questa risposta?')) return;
-  STATE.risposte = STATE.risposte.filter(r => r.id !== id);
-  dbSave(STATE.risposte);
-  render();
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  RENDER ENGINE
-// ═══════════════════════════════════════════════════════════════
-
-function render() {
-  const views = {
-    home:      homeView,
-    survey:    surveyView,
-    thankyou:  thankyouView,
-    dashboard: dashboardView,
-    report:    reportView,
-  };
-  document.getElementById('app').innerHTML = `
-    ${navBar()}
-    <div style="padding:1.25rem;max-width:760px;margin:0 auto;padding-bottom:3rem">
-      ${(views[STATE.view] || homeView)()}
-    </div>`;
-}
-
-// Boot
-render();
+// ═══════════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════════
+resetForm();
+updateHomeCount();
 </script>
 </body>
 </html>
